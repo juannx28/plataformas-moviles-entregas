@@ -1,0 +1,47 @@
+html {
+    background-color: #222;
+    color: #ee6;
+}
+
+strong {
+    text-decoration: underline;
+    text-decoration-color: white;
+}
+
+.the-force {
+    background-color: #444;
+    font-weight: bold;
+}
+
+.light-side {
+    color: #66f;
+}
+
+.dark-side {
+    color: #f33;
+}
+
+p {
+   font-family: sans-serif;
+}
+
+h1, h2, h3{
+     color: #eee;
+}
+
+body > h1 {
+    text-align: center;
+}
+
+#og-trilogy {
+    list-style-type: circle;
+}
+
+ul:nth-of-type(2) {
+    padding-left: 40px;
+}
+
+ul:last-of-type li:last-child {
+    margin-top: 15px;
+}
+
