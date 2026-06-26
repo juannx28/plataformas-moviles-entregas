@@ -1,127 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Versionado con Git</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Git - Versionado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+    .card-custom {
+      transition: transform 0.3s;
+    }
+    .card-custom:hover {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Git Control</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Mostrar menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <span class="ms-2 fst-italic">--distributed-is-the-new-centralized</span>
-            <div class="collapse navbar-collapse" id="menuPrincipal">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Recursos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Acerca de</a>
-                    </li>
-                </ul>
-                <form class="d-flex ms-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
-                    <button class="btn btn-primary" type="submit">Ir</button>
-                </form>
-            </div>
+
+  <!-- Sección principal tipo hero -->
+  <section class="hero">
+    <h1>Gestión de Versiones con Git</h1>
+    <p>El poder del control distribuido en tus proyectos</p>
+    <a href="#info" class="btn btn-light mt-3">Descubrir más</a>
+  </section>
+
+  <!-- Sección de tarjetas informativas -->
+  <div id="info" class="container my-5">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card card-custom shadow">
+          <div class="card-body">
+            <h5 class="card-title">¿Qué es Git?</h5>
+            <p class="card-text">Un sistema de control de versiones que permite trabajar en equipo de forma eficiente.</p>
+            <a href="#" class="btn btn-outline-primary">Leer más</a>
+          </div>
         </div>
-    </nav>
-
-    <!-- Encabezado principal -->
-    <header class="py-4 bg-secondary text-white text-center">
-        <h1>Gestión de Versiones con Git</h1>
-    </header>
-</body>
-</html>
-    <p class="fs-5"><strong>Git</strong> es un sistema de control de versiones distribuido, ampliamente utilizado en el desarrollo de
-        software moderno. Fue creado para gestionar proyectos de forma rápida, eficiente y colaborativa.</p>
-
-    <h2>Comandos más populares de Git</h2>
-    <ul class="list-group">
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git init</code> - Inicializa un nuevo repositorio Git en el directorio actual. Este comando crea un repositorio vacío.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git clone [url]</code> - Clona un repositorio remoto en tu máquina local. Ejemplo: <code>git clone https://github.com/usuario/repositorio.git</code>.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git status</code> - Muestra el estado del repositorio: archivos modificados, nuevos archivos no rastreados, cambios preparados para el commit, etc.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git add [archivo]</code> - Agrega un archivo o cambios específicos al área de preparación (staging area) para el commit.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git commit -m "[mensaje]"</code> - Crea un commit con los archivos añadidos al área de preparación, agregando un mensaje descriptivo.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git push</code> - Sube los cambios locales al repositorio remoto. Generalmente se usa después de un commit para actualizar el repositorio remoto.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git pull</code> - Obtiene y combina los cambios del repositorio remoto al local. Equivalente a <code>git fetch</code> seguido de <code>git merge</code>.</li>
-        <li class="list-group-item shadow-sm p-3 mb-3 bg-body-tertiary rounded"><code>git checkout [rama]</code> - Cambia a una rama específica del repositorio. Si la rama no existe, se puede crear con <code>git checkout -b [rama]</code>.</li>
-    </ul>
-
-    <h2>Comparación con otros sistemas</h2>
-    <table class="table table-striped">
-        <thead class="table-primary">
-            <tr>
-                <th>Sistema</th>
-                <th>Tipo</th>
-                <th>Popularidad</th>
-            </tr>
-        </thead>
-        <tbody class="table-secondary">
-            <tr>
-                <td>Git</td>
-                <td>Distribuido</td>
-                <td>Muy alta</td>
-            </tr>
-            <tr>
-                <td>SVN</td>
-                <td>Centralizado</td>
-                <td>Media</td>
-            </tr>
-            <tr>
-                <td>Mercurial</td>
-                <td>Distribuido</td>
-                <td>Baja</td>
-            </tr>
-            <tr>
-                <td>Perforce</td>
-                <td>Centralizado</td>
-                <td>Especializado (AAA, empresas)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>¿Ya usaste Git?</h2>
-    <p>Completá el siguiente formulario para compartir tu experiencia:</p>
-
-    <form class="form">
-        <label for="nombre">Tu nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control">
-
-        <label for="experiencia">¿Qué usás más?</label><br>
-        <select id="experiencia" name="experiencia" class="form-select">
-            <option value="git">Git</option>
-            <option value="github">Git + GitHub</option>
-            <option value="otro">Otro sistema</option>
-            <option value="ninguno">Todavía no uso ninguno</option>
-        </select>
-
-        <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Enviar
-        </button>
-    </form>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    ¿Estás seguro que quieres enviar esta información?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="liveToastBtn" data-bs-dismiss="modal">Enviar</button>
-                </div>
-            </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-custom shadow">
+          <div class="card-body">
+            <h5 class="card-title">Ventajas</h5>
+            <p class="card-text">Historial completo, ramas flexibles y colaboración distribuida.</p>
+            <a href="#" class="btn btn-outline-success">Explorar</a>
+          </div>
         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-custom shadow">
+          <div class="card-body">
+            <h5 class="card-title">Recursos</h5>
+            <p class="card-text">Tutoriales, documentación y herramientas para dominar Git.</p>
+            <a href="#" class="btn btn-outline-danger">Acceder</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
-</html>
+  </div>
+</</html>
