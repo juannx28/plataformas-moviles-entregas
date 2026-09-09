@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>    
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Lista de Compras - DOM y JavaScript</title>    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <style>
+        /* Estilo para marcar productos comprados */
+        .comprado {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>    
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">        
+        <h1>Lista de Compras</h1>        
+        <div class="card">            
+            <div class="card-body">                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>Listado de Productos</h2>                
+                    <!-- Botones generales: Ordenar y Limpiar -->
+                    <div>
+                        <button id="btn-ordenar" class="btn btn-outline-secondary btn-sm me-2">
+                            Ordenar A-Z
+                        </button>
+                        <button id="btn-limpiar" class="btn btn-outline-danger btn-sm">
+                            Vaciar Lista
+                        </button>
+                    </div>
+                </div>
+
+                <ul id="lista-productos" class="list-group mb-3">                    
+                    <!-- Los productos se agregarán dinámicamente aquí -->
+                </ul>                
+                
+                <hr class="hr">                
+                <h2>Agregar Producto</h2>                
+                <form id="form-producto">                    
+                    <div class="input-group mb-3">                        
+                        <input type="text" class="form-control" placeholder="Nombre del producto..." aria-label="Nombre del Producto" required>                        
+                        <button class="btn btn-primary" type="submit">Agregar Producto</button>                    
+                    </div>                
+                </form>            
+            </div>        
+        </div>    
+    </div>    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>    
+    <script type="text/javascript">
+        // Selección de elementos del DOM
+        const listaProductos = document.querySelector('#lista-productos');
+        const formProducto = document.querySelector('#form-producto');
+        const btnLimpiar = document.querySelector('#btn-limpiar');
+        const btnOrdenar = document.querySelector('#btn-ordenar');
+
+        // Estructura de datos global para almacenar productos y sincronizar con localStorage
+        let productos = JSON.parse(localStorage.getItem('lista_compras')) || ['Pan'];
+
+        /**
+         * Guarda el estado actual del arreglo en localStorage
+         */
+        function guardarEnLocalStorage() {
+            localStorage.setItem('lista_compras', JSON.stringify(productos));
+        }
+
+        /**
+         * Renderiza nuevamente toda la lista en el DOM
+         */
+        function renderizarLista() {
+            // Se limpia el contenido HTML actual
+            listaProductos.innerHTML = '';
+
+            productos.forEach((prodObj, index) => {
+                // Normalizar si viene como string simple (compatibilidad inicial)
+                const item = typeof prodObj === 'string' ? { nombre: prodObj, comprado: false } : prodObj;
+                productos[index] = item; // Asegurar estructura en el arreglo
+
+                // Crear elemento de lista <li> utilizando createElement
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+                // Texto del producto
+                const spanTexto = document.createElement('span');
+                spanTexto.textContent = item.nombre;
+                spanTexto.style.cursor = 'pointer';
+                if (item.comprado) {
+                    spanTexto.classList.add('comprado');
+                }
+
+                // Marcar/Desmarcar como comprado haciendo clic en el texto
+                spanTexto.addEventListener('click', () => {
+                    item.comprado = !item.comprado;
+                    guardarEnLocalStorage();
+                    renderizarLista();
+                });
+
+                // Contenedor de botones de acción por producto
+                const divAcciones = document.createElement('div');
+
+                // Botón Editar
+                const btnEditar = document.createElement('button');
+                btnEditar.textContent = 'Editar';
+                btnEditar.className = 'btn btn-warning btn-sm me-2';
+                btnEditar.addEventListener('click', () => {
+                    const nuevoNombre = prompt('Editar nombre del producto:', item.nombre);
+                    if (nuevoNombre !== null && nuevoNombre.trim() !== '') {
+                        item.nombre = nuevoNombre.trim();
+                        guardarEnLocalStorage();
+                        renderizarLista();
+                    }
+                });
+
+                // Botón Eliminar
+                const btnEliminar = document.createElement('button');
+                btnEliminar.textContent = 'Eliminar';
+                btnEliminar.className = 'btn btn-danger btn-sm';
+                btnEliminar.addEventListener('click', () => {
+                    productos.splice(index, 1);
+                    guardarEnLocalStorage();
+                    renderizarLista();
+                });
+
+                divAcciones.appendChild(btnEditar);
+                divAcciones.appendChild(btnEliminar);
+
+                li.appendChild(spanTexto);
+                li.appendChild(divAcciones);
+
+                // Agregar el nodo a la lista usando .append()
+                listaProductos.append(li);
+            });
+
+            guardarEnLocalStorage();
+        }
+
+        /**
+         * agregarProducto()
+         * Esta función se llama cuando el usuario envía el formulario con el nombre del producto para agregar.
+         */
+        function agregarProducto(nombreProducto) {
+            if (!nombreProducto.trim()) return;
+
+            productos.push({
+                nombre: nombreProducto.trim(),
+                comprado: false
+            });
+
+            renderizarLista();
+        }
+
+        /**
+         * Manejador de eventos del formulario
+         */
+        function handlerFormulario(evento) {
+            evento.preventDefault();
+            const input = evento.target.querySelector('input');
+            const nombreProducto = input.value;
+            input.value = "";
+            agregarProducto(nombreProducto);
+        }
+
+        // Event listener para el formulario
+        formProducto.addEventListener('submit', handlerFormulario);
+
+        // Funcionalidad: Limpiar toda la lista
+        btnLimpiar.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que querés borrar todos los productos?')) {
+                productos = [];
+                renderizarLista();
+            }
+        });
+
+        // Funcionalidad: Ordenar alfabéticamente
+        btnOrdenar.addEventListener('click', () => {
+            productos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            renderizarLista();
+        });
+
+        // Carga e inicialización de la lista al abrir la página
+        renderizarLista();
+    </script>
+</body>
+</html>
